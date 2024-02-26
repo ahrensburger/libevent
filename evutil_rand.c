@@ -195,8 +195,10 @@ evutil_secure_rng_get_bytes(void *buf, size_t n)
 void
 evutil_secure_rng_add_bytes(const char *buf, size_t n)
 {
+#if !defined(EVENT__HAVE_ARC4RANDOM) || defined(EVENT__HAVE_ARC4RANDOM_ADDRANDOM)
 	arc4random_addrandom((unsigned char*)buf,
 	    n>(size_t)INT_MAX ? INT_MAX : (int)n);
+#endif
 }
 
 void
